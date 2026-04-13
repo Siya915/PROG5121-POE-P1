@@ -1,8 +1,7 @@
-package loginapp;
-
+package login;
 import java.util.Scanner;
-
-public class MainApp {
+public class MainApp 
+{
 
     public static void main(String[] args) {
 
@@ -41,3 +40,5 @@ public class MainApp {
         System.out.println(login.returnLoginStatus(status));
     }
 }
+
+

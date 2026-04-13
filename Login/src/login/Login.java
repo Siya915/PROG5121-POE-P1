@@ -1,16 +1,19 @@
-package loginapp;
-
+package login;
 import java.util.regex.Pattern;
+public class Login 
+{
+    
 
 /**
  * Cell phone regex adapted from:
  * https://stackoverflow.com/questions/42179046/java-regex-for-phone-number-with-country-code
  */
 
-public class Login {
+
 
     private String storedUsername;
     private String storedPassword;
+    private String storedCellPhone;
     private String firstName;
     private String lastName;
 
@@ -45,6 +48,7 @@ public class Login {
 
         this.storedUsername = username;
         this.storedPassword = password;
+        this.storedCellPhone = cellPhone;
         this.firstName = firstName;
         this.lastName = lastName;
 
@@ -63,3 +67,5 @@ public class Login {
         }
     }
 }
+
+
