@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class MainApp 
 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
 
         Scanner input = new Scanner(System.in);
         Login login = new Login();
@@ -38,7 +39,47 @@ public class MainApp
 
         boolean status = login.loginUser(loginUser, loginPass);
         System.out.println(login.returnLoginStatus(status));
+    
+    
+        System.out.println("\n=== MESSAGE OPTIONS ===");
+
+        System.out.println("Enter your message:");
+        String msgText = input.nextLine();
+
+        Message msg = new Message(msgText);
+
+        System.out.println("Message ID generated: " 
+                + msg.getMessageID());
+
+        System.out.println("""
+        Choose:
+        1 = Send Message
+        2 = Disregard Message
+        3 = Store Message
+        """);
+
+        int option = input.nextInt();
+
+        switch(option)
+        {
+
+            case 1:
+                System.out.println(msg.sendMessage());
+                break;
+
+            case 2:
+                System.out.println(msg.disregardMessage());
+                break;
+
+            case 3:
+                System.out.println(msg.storeMessage());
+                break;
+
+            default:
+                System.out.println("Invalid option");
+        }
     }
-}
+}    
+
 
 
