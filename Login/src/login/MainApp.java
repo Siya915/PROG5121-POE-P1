@@ -7,9 +7,8 @@ public class MainApp
     {
 
         Scanner input = new Scanner(System.in);
-        Login login = new Login();
 
-        System.out.println("=== REGISTER ===");
+        System.out.println("===== QUICKCHAT REGISTRATION =====");
 
         System.out.print("Enter first name: ");
         String firstName = input.nextLine();
@@ -23,63 +22,135 @@ public class MainApp
         System.out.print("Enter password: ");
         String password = input.nextLine();
 
-        System.out.print("Enter SA cell number (+27...): ");
+        System.out.print("Enter SA cell number: ");
         String cell = input.nextLine();
 
-        String regMessage = login.registerUser(username, password, cell, firstName, lastName);
-        System.out.println(regMessage);
+        Login login = new Login(
+                firstName,
+                lastName,
+                username,
+                password,
+                cell
+        );
 
-        System.out.println("\n=== LOGIN ===");
+        System.out.println(login.registerUser());
+
+        // LOGIN
+        System.out.println("\n===== LOGIN =====");
 
         System.out.print("Enter username: ");
-        String loginUser = input.nextLine();
+        String enteredUsername = input.nextLine();
 
         System.out.print("Enter password: ");
-        String loginPass = input.nextLine();
+        String enteredPassword = input.nextLine();
 
-        boolean status = login.loginUser(loginUser, loginPass);
-        System.out.println(login.returnLoginStatus(status));
-    
-    
-        System.out.println("\n=== MESSAGE OPTIONS ===");
+        boolean loginSuccess =
+                login.loginUser(enteredUsername, enteredPassword);
 
-        System.out.println("Enter your message:");
-        String msgText = input.nextLine();
+        System.out.println(
+                login.returnLoginStatus(loginSuccess)
+        );
 
-        Message msg = new Message(msgText);
-
-        System.out.println("Message ID generated: " 
-                + msg.getMessageID());
-
-        System.out.println("""
-        Choose:
-        1 = Send Message
-        2 = Disregard Message
-        3 = Store Message
-        """);
-
-        int option = input.nextInt();
-
-        switch(option)
+        // Only continue if login successful
+        if (loginSuccess) 
         {
 
-            case 1:
-                System.out.println(msg.sendMessage());
-                break;
+            System.out.println("\nWelcome to QuickChat.");
 
-            case 2:
-                System.out.println(msg.disregardMessage());
-                break;
+            boolean running = true;
 
-            case 3:
-                System.out.println(msg.storeMessage());
-                break;
+            while (running) {
 
-            default:
-                System.out.println("Invalid option");
+                System.out.println("""
+                        
+                        ===== MENU =====
+                        1) Send Messages
+                        2) Show recently sent messages
+                        3) Quit
+                        """);
+
+                System.out.print("Choose option: ");
+
+                int option = input.nextInt();
+                input.nextLine();
+
+                switch (option) 
+                {
+
+                    case 1:
+
+                        System.out.print
+                        (
+                                "How many messages would you like to send? "
+                        );
+
+                        int total = input.nextInt();
+                        input.nextLine();
+
+                        for (int i = 0; i < total; i++) 
+                        {
+
+                            System.out.println(
+                                    "\n===== MESSAGE "
+                                            + (i + 1)
+                                            + " ====="
+                            );
+
+                            System.out.print("Recipient number: ");
+                            String recipient = input.nextLine();
+
+                            System.out.print("Enter message: ");
+                            String text = input.nextLine();
+
+                            Message msg =
+                                    new Message(i, recipient, text);
+
+                            System.out.println(
+                                    msg.checkRecipientCell()
+                            );
+
+                            System.out.println(
+                                    msg.validateMessageLength()
+                            );
+
+                            System.out.println("""
+                                    
+                                    1) Send Message
+                                    2) Disregard Message
+                                    3) Store Message
+                                    """);
+
+                            int sendOption = input.nextInt();
+                            input.nextLine();
+
+                            System.out.println(
+                                    msg.sentMessage(sendOption)
+                            );
+
+                            System.out.println(
+                                    msg.printMessages()
+                            );
+                        }
+
+                        break;
+
+                    case 2:
+                        System.out.println("Coming Soon.");
+                        break;
+
+                    case 3:
+                        running = false;
+                        System.out.println("Goodbye.");
+                        break;
+
+                    default:
+                        System.out.println("Invalid option.");
+                }
+            }
         }
     }
-}    
+}
+         
 
 
 
